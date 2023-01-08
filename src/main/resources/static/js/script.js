@@ -1,22 +1,22 @@
-$(document).ready(function (){
+$(document).ready(function () {
     getRestaurantesList()
     getMenusList()
 });
 
-function getFrontRestauranteData(){
-    let k={
-        id:$("#id").val(),
-        razonSocial:$("#razonSocial").val(),
-        tipoRestaurante:$("#tipoRestaurante").val(),
-        ciudad:$("#ciudad").val(),
-        horaApertura:$("#horaApertura").val(),
-        horaCierre:$("#horaCierre").val(),
+function getFrontRestauranteData() {
+    let k = {
+        id: $("#id").val(),
+        razonSocial: $("#razonSocial").val(),
+        tipoRestaurante: $("#tipoRestaurante").val(),
+        ciudad: $("#ciudad").val(),
+        horaApertura: $("#horaApertura").val(),
+        horaCierre: $("#horaCierre").val(),
 
     }
     return k;
 }
 
-function cleanFields(){
+function cleanFields() {
     $("#id").val("");
     $("#razonSocial").val("");
     $("#tipoRestaurante").val("");
@@ -27,50 +27,50 @@ function cleanFields(){
 
 }
 
-function saveRestaurante(){
+function saveRestaurante() {
     let data = getFrontRestauranteData();
-    data.id=null;
-    let dataToSend=JSON.stringify(data)
+    data.id = null;
+    let dataToSend = JSON.stringify(data)
     $.ajax({
-        url:"/api/restaurante/save",
-        type:"POST",
+        url: "/api/restaurante/save",
+        type: "POST",
         datatype: "JSON",
-        contentType:'application/json',
-        data:dataToSend,
-        success: function(p){
+        contentType: 'application/json',
+        data: dataToSend,
+        success: function (p) {
             console.log(p);
             cleanFields();
             getRestauranteList();
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
 
 
-function getRestauranteList(){
+function getRestauranteList() {
     $.ajax({
-        url:"/api/restaurante/all",
-        type:"GET",
+        url: "/api/restaurante/all",
+        type: "GET",
         datatype: "JSON",
-        success: function(p){
+        success: function (p) {
             console.log('entro');
-           $("#results").empty();
-           let l ="";
-           for (let i=0; i<p.length; i++){
+            $("#results").empty();
+            let l = "";
+            for (let i = 0; i < p.length; i++) {
 
-               let menuList = "";
-               for(let menus of p[i].menus){
-                   console.log(menus['nombreMenu']);
-                   console.log("*************");
-                   menuList += '<li>'+menus['nombreMenu']+' $ '+menus['precio']+'</li>';
-               }
+                let menuList = "";
+                for (let menus of p[i].menus) {
+                    console.log(menus['nombreMenu']);
+                    console.log("*************");
+                    menuList += '<li>' + menus['nombreMenu'] + ' $ ' + menus['precio'] + '</li>';
+                }
 
-               l+=` 
+                l += ` 
                    <div class="col">
                             <div class="card"><div class="card-header">
                                     <h5 class="card-title">${p[i].razonSocial}</h5>
@@ -84,13 +84,13 @@ function getRestauranteList(){
                                     
                                `;
 
-                                  l+=`                
+                l += `                
                                    <p class="card-text">Menus:
                                     <ul>${menuList}</ul>
                                    </p>
                                   `;
 
-                                  l+=`
+                l += `
                                </div>
                                <div class="card-footer">
                                     <button type="button" class="btn btn-outline-primary" onclick="getRestauranteById(${p[i].id})">Actualizar</button>
@@ -100,28 +100,28 @@ function getRestauranteList(){
                        </div>
                    </div>
                    `;
-           }
-           $("#results").append(l);
+            }
+            $("#results").append(l);
 
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
 
 
-function getRestauranteById(idRestaurante){
+function getRestauranteById(idRestaurante) {
     $(".saveButtonJL").hide();
     $(".updateButtonJL").show();
     $.ajax({
-        url:"/api/restaurante/"+idRestaurante,
-        type:"GET",
+        url: "/api/restaurante/" + idRestaurante,
+        type: "GET",
         datatype: "JSON",
-        success: function(p){
+        success: function (p) {
             console.log(p);
             $("#id").val(p.id);
             $("#razonSocial").val(p.razonSocial);
@@ -131,103 +131,106 @@ function getRestauranteById(idRestaurante){
             $("#horaCierre").val(p.horaCierre);
 
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
-function updateRestaurante(){
+
+function updateRestaurante() {
     let data = getFrontRestauranteData();
 
-    let dataToSend=JSON.stringify(data)
+    let dataToSend = JSON.stringify(data)
     $.ajax({
-        url:"/api/restaurante/update",
-        type:"PUT",
+        url: "/api/restaurante/update",
+        type: "PUT",
         datatype: "JSON",
-        contentType:'application/json',
-        data:dataToSend,
-        success: function(p){
+        contentType: 'application/json',
+        data: dataToSend,
+        success: function (p) {
             console.log(p);
             cleanFields();
             getRestauranteList();
             $(".saveButtonJL").show();
             $(".updateButtonJL").hide();
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
-function cancelUpdateRestaurante(){
+
+function cancelUpdateRestaurante() {
     cleanFields();
     $(".saveButtonJL").show();
     $(".updateButtonJL").hide();
 }
-function deleteRestauranteById(idRestaurante){
+
+function deleteRestauranteById(idRestaurante) {
     $.ajax({
-        url:"/api/restaurante/"+idRestaurante,
-        type:"DELETE",
+        url: "/api/restaurante/" + idRestaurante,
+        type: "DELETE",
         datatype: "JSON",
-        success: function(p){
-           console.log(p);
+        success: function (p) {
+            console.log(p);
             getRestauranteList();
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
 
 
-function getFrontMenuData(){
-    let k={
-        id:$("#id").val(),
-        tipoMenu:$("#tipoMenu").val(),
-        nombreMenu:$("#nombreMenu").val(),
-        precio:$("#precio").val(),
-        restaurante:{
-            id:$("#RestauranteSelected").val()
+function getFrontMenuData() {
+    let k = {
+        id: $("#id").val(),
+        tipoMenu: $("#tipoMenu").val(),
+        nombreMenu: $("#nombreMenu").val(),
+        precio: $("#precio").val(),
+        restaurante: {
+            id: $("#RestauranteSelected").val()
         }
     }
     return k;
 }
 
-function getRestaurantesList(){
+function getRestaurantesList() {
     $.ajax({
-        url:"/api/restaurante/all",
-        type:"GET",
+        url: "/api/restaurante/all",
+        type: "GET",
         datatype: "JSON",
-        success: function(p){
+        success: function (p) {
             console.log(p);
 
 
-            for (let i=0; i<p.length;i++){
-                let s=`
+            for (let i = 0; i < p.length; i++) {
+                let s = `
                     <option value="${p[i].id}">${p[i].razonSocial}</option>
                 `;
                 $("#RestauranteSelected").append(s);
             }
 
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
 
-function cleanFieldsMenu(){
+function cleanFieldsMenu() {
     $("#id").val("");
     $("#tipoMenu").val("");
     $("#nombreMenu").val("");
@@ -235,49 +238,49 @@ function cleanFieldsMenu(){
     $("#RestauranteSelected").val("").change();
 }
 
-function saveMenu(){
+function saveMenu() {
     let data = getFrontMenuData();
-    data.id=null;
-    let dataToSend=JSON.stringify(data)
+    data.id = null;
+    let dataToSend = JSON.stringify(data)
     $.ajax({
-        url:"/api/menu/save",
-        type:"POST",
+        url: "/api/menu/save",
+        type: "POST",
         datatype: "JSON",
-        contentType:'application/json',
-        data:dataToSend,
-        success: function(p){
+        contentType: 'application/json',
+        data: dataToSend,
+        success: function (p) {
             console.log(p);
             cleanFieldsMenu();
             getMenuList();
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
 
 
-function getMenuList(){
+function getMenuList() {
     $.ajax({
-        url:"/api/menu/all",
-        type:"GET",
+        url: "/api/menu/all",
+        type: "GET",
         datatype: "JSON",
-        success: function(p){
+        success: function (p) {
             console.log(p);
             $("#menu").empty();
-            let l ="";
-            for (let i=0; i<p.length; i++){
+            let l = "";
+            for (let i = 0; i < p.length; i++) {
                 let ingredienteList = "";
-                for(let ingrediente of p[i].ingredientes){
+                for (let ingrediente of p[i].ingredientes) {
                     console.log(ingrediente['nombre']);
                     console.log("*************");
-                    ingredienteList += '<li>'+ingrediente['nombre']+' Calorias: '+ingrediente['calorias']+'</li>';
+                    ingredienteList += '<li>' + ingrediente['nombre'] + ' Calorias: ' + ingrediente['calorias'] + '</li>';
                 }
 
-                l+=` 
+                l += ` 
                    <div class="col">
                             <div class="card"><div class="card-header">
                                     <h5 class="card-title">${p[i].tipoMenu}</h5>
@@ -289,13 +292,13 @@ function getMenuList(){
                                    
                                    `;
 
-                                   l+=`                
+                l += `                
                                    <p class="card-text">Ingredientes:
                                     <ul>${ingredienteList}</ul>
                                    </p>
                                   `;
 
-                               l+=` 
+                l += ` 
                                </div>
                                <div class="card-footer">
                                     <button type="button" class="btn btn-outline-primary" onclick="getMenuById(${p[i].id})">Actualizar</button>
@@ -308,23 +311,23 @@ function getMenuList(){
             }
             $("#menu").append(l);
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
 
-function getMenuById(idMenu){
+function getMenuById(idMenu) {
     $(".saveButtonJL").hide();
     $(".updateButtonJL").show();
     $.ajax({
-        url:"/api/menu/"+idMenu,
-        type:"GET",
+        url: "/api/menu/" + idMenu,
+        type: "GET",
         datatype: "JSON",
-        success: function(p){
+        success: function (p) {
             console.log(p);
             $("#id").val(p.id);
             $("#tipoMenu").val(p.tipoMenu);
@@ -332,75 +335,78 @@ function getMenuById(idMenu){
             $("#precio").val(p.precio);
             $("#RestauranteSelected").val(p.restaurante.id).change();
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
-function updateMenu(){
+
+function updateMenu() {
     let data = getFrontMenuData();
 
-    let dataToSend=JSON.stringify(data)
+    let dataToSend = JSON.stringify(data)
     $.ajax({
-        url:"/api/menu/update",
-        type:"PUT",
+        url: "/api/menu/update",
+        type: "PUT",
         datatype: "JSON",
-        contentType:'application/json',
-        data:dataToSend,
-        success: function(p){
+        contentType: 'application/json',
+        data: dataToSend,
+        success: function (p) {
             console.log(p);
             cleanFieldsMenu();
             getMenuList();
             $(".saveButtonJL").show();
             $(".updateButtonJL").hide();
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
-            //alert('Peticion Realizada')
-        }
-    });
-}
-function cancelUpdateMenu(){
-    cleanFieldsMenu();
-    $(".saveButtonJL").show();
-    $(".updateButtonJL").hide();
-}
-function deleteMenuById(idMenu){
-    $.ajax({
-        url:"/api/menu/"+idMenu,
-        type:"DELETE",
-        datatype: "JSON",
-        success: function(p){
-            console.log(p);
-            getMenuList();
-        },
-        error: function (xhr, status){
-            //alert('ha sucedido un problema')
-        },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
 
-function getFrontIngredienteData(){
-    let k={
-        id:$("#id").val(),
-        nombre:$("#nombre").val(),
-        calorias:$("#calorias").val(),
-        menu:{
-            id:$("#MenuSelected").val()
+function cancelUpdateMenu() {
+    cleanFieldsMenu();
+    $(".saveButtonJL").show();
+    $(".updateButtonJL").hide();
+}
+
+function deleteMenuById(idMenu) {
+    $.ajax({
+        url: "/api/menu/" + idMenu,
+        type: "DELETE",
+        datatype: "JSON",
+        success: function (p) {
+            console.log(p);
+            getMenuList();
+        },
+        error: function (xhr, status) {
+            //alert('ha sucedido un problema')
+        },
+        complete: function (xhr, status) {
+            //alert('Peticion Realizada')
+        }
+    });
+}
+
+function getFrontIngredienteData() {
+    let k = {
+        id: $("#id").val(),
+        nombre: $("#nombre").val(),
+        calorias: $("#calorias").val(),
+        menu: {
+            id: $("#MenuSelected").val()
         }
     }
     return k;
 }
 
-function cleanFieldsIngrediente(){
+function cleanFieldsIngrediente() {
     $("#id").val("");
     $("#nombre").val("");
     $("#calorias").val("");
@@ -409,63 +415,63 @@ function cleanFieldsIngrediente(){
 
 }
 
-function getMenusList(){
+function getMenusList() {
     $.ajax({
-        url:"/api/menu/all",
-        type:"GET",
+        url: "/api/menu/all",
+        type: "GET",
         datatype: "JSON",
-        success: function(p){
+        success: function (p) {
             console.log(p);
-            for (let i=0; i<p.length;i++){
-                let s=`
+            for (let i = 0; i < p.length; i++) {
+                let s = `
                     <option value="${p[i].id}">${p[i].nombreMenu}</option>
                 `;
                 $("#MenuSelected").append(s);
             }
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
 
-function saveIngrediente(){
+function saveIngrediente() {
     let data = getFrontIngredienteData();
-    data.id=null;
-    let dataToSend=JSON.stringify(data)
+    data.id = null;
+    let dataToSend = JSON.stringify(data)
     $.ajax({
-        url:"/api/ingrediente/save",
-        type:"POST",
+        url: "/api/ingrediente/save",
+        type: "POST",
         datatype: "JSON",
-        contentType:'application/json',
-        data:dataToSend,
-        success: function(p){
+        contentType: 'application/json',
+        data: dataToSend,
+        success: function (p) {
             console.log(p);
             cleanFieldsIngrediente();
             getIngredienteList();
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
 
-function getIngredienteList(){
+function getIngredienteList() {
     $.ajax({
-        url:"/api/ingrediente/all",
-        type:"GET",
+        url: "/api/ingrediente/all",
+        type: "GET",
         datatype: "JSON",
-        success: function(j){
+        success: function (j) {
             console.log(j);
             $("#ingredientes").empty();
-            let l ="";
-            l+=`
+            let l = "";
+            l += `
             <table class="table">
                   <thead>
                     <tr>
@@ -475,8 +481,8 @@ function getIngredienteList(){
                     </tr>
                   </thead>
             `;
-            for (let i=0; i<j.length; i++){
-                l+=` 
+            for (let i = 0; i < j.length; i++) {
+                l += ` 
                     <tbody>
                         <tr>
                           <th scope="row">${j[i].nombre}</th>
@@ -490,86 +496,87 @@ function getIngredienteList(){
                     </tbody>                                                 
                    `;
             }
-            l+=`</table>`;
+            l += `</table>`;
             $("#ingredientes").append(l);
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
 
 
-function deleteIngredienteById(idIngrediente){
+function deleteIngredienteById(idIngrediente) {
     $.ajax({
-        url:"/api/menu/"+idIngrediente,
-        type:"DELETE",
+        url: "/api/menu/" + idIngrediente,
+        type: "DELETE",
         datatype: "JSON",
-        success: function(p){
+        success: function (p) {
             console.log(p);
             getIngredienteList();
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
 
-function getIngredienteById(idMenu){
+function getIngredienteById(idMenu) {
     $(".saveButtonJL").hide();
     $(".updateButtonJL").show();
     $.ajax({
-        url:"/api/ingrediente/"+idMenu,
-        type:"GET",
+        url: "/api/ingrediente/" + idMenu,
+        type: "GET",
         datatype: "JSON",
-        success: function(p){
+        success: function (p) {
             console.log(p);
             $("#id").val(p.id);
             $("#nombre").val(p.nombre);
             $("#calorias").val(p.calorias);
             $("#MenuSelected").val(p.menu.id).change();
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
 
-function updateIngrediente(){
+function updateIngrediente() {
     let data = getFrontIngredienteData();
 
-    let dataToSend=JSON.stringify(data)
+    let dataToSend = JSON.stringify(data)
     $.ajax({
-        url:"/api/ingrediente/update",
-        type:"PUT",
+        url: "/api/ingrediente/update",
+        type: "PUT",
         datatype: "JSON",
-        contentType:'application/json',
-        data:dataToSend,
-        success: function(p){
+        contentType: 'application/json',
+        data: dataToSend,
+        success: function (p) {
             console.log(p);
             cleanFieldsIngrediente();
             getIngredienteList();
             $(".saveButtonJL").show();
             $(".updateButtonJL").hide();
         },
-        error: function (xhr, status){
+        error: function (xhr, status) {
             //alert('ha sucedido un problema')
         },
-        complete: function (xhr, status){
+        complete: function (xhr, status) {
             //alert('Peticion Realizada')
         }
     });
 }
-function cancelUpdateIngrediente(){
+
+function cancelUpdateIngrediente() {
     cleanFieldsIngrediente();
     $(".saveButtonJL").show();
     $(".updateButtonJL").hide();

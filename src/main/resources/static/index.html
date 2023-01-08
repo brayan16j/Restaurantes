@@ -4,86 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Restaurantes Quileia</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="css/myStyle.css">
 </head>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
 <body>
 <div class="container">
     <div class="row">
 
-    <div class="col" style="margin-top: 5%">
-        <h1>Crear Restaurantes </h1>
-        <div id="formato" class="form-group container text-center">
-            <input class="form-control m-3" style="width: 18em" id="id" type="hidden">
-            <input class="form-control m-3" style="width: 18em" id="razonSocial" type="text" placeholder="Razon Social">
+        <div class="col" style="margin-top: 5%">
+            <h1>Crear Restaurantes </h1>
+            <div id="formato" class="form-group container text-center">
+                <input class="form-control m-3" style="width: 18em" id="id" type="hidden">
+                <input class="form-control m-3" style="width: 18em" id="razonSocial" type="text"
+                       placeholder="Razon Social">
 
                 <select class="form-control m-3" style="width: 18em" id="tipoRestaurante">
-                    <option  value="#" selected >Tipo Entrada</option>
-                    <option  value="1">Vegano</option>
-                    <option  value="2">Vegetariano</option>
-                    <option  value="3">Carnes Rojas</option>
-                    <option  value="4">Aves</option>
+                    <option value="#" selected>Tipo Entrada</option>
+                    <option value="1">Vegano</option>
+                    <option value="2">Vegetariano</option>
+                    <option value="3">Carnes Rojas</option>
+                    <option value="4">Aves</option>
                 </select>
-            <input class="form-control m-3" style="width: 18em" id="ciudad" type="text" placeholder="Ciudad">
-            <input class="form-control m-3" style="width: 18em" id="horaApertura" type="text" placeholder="Hora Apertura">
-            <input class="form-control m-3" style="width: 18em" id="horaCierre" type="text" placeholder="Hora Cierre">
+                <input class="form-control m-3" style="width: 18em" id="ciudad" type="text" placeholder="Ciudad">
+                <input class="form-control m-3" style="width: 18em" id="horaApertura" type="text"
+                       placeholder="Hora Apertura">
+                <input class="form-control m-3" style="width: 18em" id="horaCierre" type="text"
+                       placeholder="Hora Cierre">
 
-            <button type="button" class="btn btn-primary saveButtonJL" onclick="saveRestaurante()">Guardar</button>
-            <button type="button" class="btn btn-primary saveButtonJL" onclick="getRestauranteList()">Ver Restaurantes</button>
-            <button type="button" class="btn btn-primary updateButtonJL" onclick="updateRestaurante()">Actualizar</button>
-            <button type="button" class="btn btn-primary updateButtonJL" onclick="cancelUpdateRestaurante()">Cancelar</button>
+                <button type="button" class="btn btn-primary saveButtonJL" onclick="saveRestaurante()">Guardar</button>
+                <button type="button" class="btn btn-primary saveButtonJL" onclick="getRestauranteList()">Ver
+                    Restaurantes
+                </button>
+                <button type="button" class="btn btn-primary updateButtonJL" onclick="updateRestaurante()">Actualizar
+                </button>
+                <button type="button" class="btn btn-primary updateButtonJL" onclick="cancelUpdateRestaurante()">
+                    Cancelar
+                </button>
+            </div>
+            <div class="row row-cols-4 row-cols-md-1 g-4" id="results"></div>
         </div>
-        <div class="row row-cols-4 row-cols-md-1 g-4" id="results"></div>
-    </div>
 
-    <div class="col" style="margin-top: 5%">
-        <h1>Crear Menus</h1>
-        <div id="formatoMenu" class="form-group container text-center">
-            <input id="id_menu" type="hidden">
+        <div class="col" style="margin-top: 5%">
+            <h1>Crear Menus</h1>
+            <div id="formatoMenu" class="form-group container text-center">
+                <input id="id_menu" type="hidden">
                 <select class="form-control m-3" style="width: 18em" id="tipoMenu">
-                    <option  value="#" selected >Tipo Menu</option>
-                    <option  value="1">Entrada</option>
-                    <option  value="2">Plato Fuerte</option>
-                    <option  value="3">Postres</option>
-                    <option  value="4">Bebidas</option>
+                    <option value="#" selected>Tipo Menu</option>
+                    <option value="1">Entrada</option>
+                    <option value="2">Plato Fuerte</option>
+                    <option value="3">Postres</option>
+                    <option value="4">Bebidas</option>
                 </select>
-                <input class="form-control m-3" style="width: 18em" id="nombreMenu" type="text" placeholder="Nombre Menu">
+                <input class="form-control m-3" style="width: 18em" id="nombreMenu" type="text"
+                       placeholder="Nombre Menu">
                 <input class="form-control m-3" style="width: 18em" id="precio" type="number" placeholder="Precio">
-            <select class="form-control m-3" style="width: 18em" id="RestauranteSelected">
-                <option  value="#" selected >Seleccione Restaurante</option>
-            </select><br>
+                <select class="form-control m-3" style="width: 18em" id="RestauranteSelected">
+                    <option value="#" selected>Seleccione Restaurante</option>
+                </select><br>
 
-            <button type="button" class="btn btn-primary saveButtonJL" onclick="saveMenu()">Guardar</button>
-            <button type="button" class="btn btn-primary saveButtonJL" onclick="getMenuList()">Ver Menus</button>
-            <button type="button" class="btn btn-primary updateButtonJL" onclick="updateMenu()">Actualizar</button>
-            <button type="button" class="btn btn-primary updateButtonJL" onclick="cancelUpdateMenu()">Cancelar</button>
+                <button type="button" class="btn btn-primary saveButtonJL" onclick="saveMenu()">Guardar</button>
+                <button type="button" class="btn btn-primary saveButtonJL" onclick="getMenuList()">Ver Menus</button>
+                <button type="button" class="btn btn-primary updateButtonJL" onclick="updateMenu()">Actualizar</button>
+                <button type="button" class="btn btn-primary updateButtonJL" onclick="cancelUpdateMenu()">Cancelar
+                </button>
 
+            </div>
+            <div class="row row-cols-4 row-cols-md-1 g-4" id="menu"></div>
         </div>
-        <div class="row row-cols-4 row-cols-md-1 g-4" id="menu"></div>
-    </div>
 
         <div class="col" style="margin-top: 5%">
             <h1>Ingredientes Menus</h1>
             <div id="formatoIngrediente" class="form-group container text-center">
                 <input id="id_ingrediente" type="hidden">
-                <input class="form-control m-3" style="width: 18em" id="nombre" type="text" placeholder="Nombre Ingrediente">
+                <input class="form-control m-3" style="width: 18em" id="nombre" type="text"
+                       placeholder="Nombre Ingrediente">
                 <input class="form-control m-3" style="width: 18em" id="calorias" type="number" placeholder="Calorias">
                 <select class="form-control m-3" style="width: 18em" id="MenuSelected">
-                    <option  value="#" selected >Seleccione menu</option>
+                    <option value="#" selected>Seleccione menu</option>
                 </select><br>
 
                 <button type="button" class="btn btn-primary saveButtonJL" onclick="saveIngrediente()">Guardar</button>
-                <button type="button" class="btn btn-primary updateButtonJL" onclick="updateIngrediente()">Actualizar</button>
-                <button type="button" class="btn btn-primary updateButtonJL" onclick="cancelUpdateIngrediente()">Cancelar</button>
+                <button type="button" class="btn btn-primary updateButtonJL" onclick="updateIngrediente()">Actualizar
+                </button>
+                <button type="button" class="btn btn-primary updateButtonJL" onclick="cancelUpdateIngrediente()">
+                    Cancelar
+                </button>
 
             </div>
             <div class="row row-cols-4 row-cols-md-2 g-4" id="ingrediente"></div>
         </div>
-        <button type="button" class="btn btn-primary saveButtonJL" style="margin-top: 10%" onclick="getIngredienteList()">Ver Ingredientes</button>
-        <h1 id="numero_calorias" style="margin-top: 10%" >Numero de calorias</h1>
+        <button type="button" class="btn btn-primary saveButtonJL" style="margin-top: 10%"
+                onclick="getIngredienteList()">Ver Ingredientes
+        </button>
+        <h1 id="numero_calorias" style="margin-top: 10%">Numero de calorias</h1>
         <div class="row row-cols-4 row-cols-md-4 g-4" id="ingredientes"></div>
     </div>
 
