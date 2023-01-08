@@ -270,6 +270,13 @@ function getMenuList(){
             $("#menu").empty();
             let l ="";
             for (let i=0; i<p.length; i++){
+                let ingredienteList = "";
+                for(let ingrediente of p[i].ingredientes){
+                    console.log(ingrediente['nombre']);
+                    console.log("*************");
+                    ingredienteList += '<li>'+ingrediente['nombre']+' Calorias: '+ingrediente['calorias']+'</li>';
+                }
+
                 l+=` 
                    <div class="col">
                             <div class="card"><div class="card-header">
@@ -278,7 +285,17 @@ function getMenuList(){
                            <!--<img src="..." class="card-img-top" alt="...">-->
                                <div class="card-body">
                                    <p class="card-text">Tipo: ${p[i].nombreMenu}</p>
-                                   <p class="card-text">Precio: ${p[i].precio}</p>    
+                                   <p class="card-text">Precio: ${p[i].precio}</p>
+                                   
+                                   `;
+
+                                   l+=`                
+                                   <p class="card-text">Ingredientes:
+                                    <ul>${ingredienteList}</ul>
+                                   </p>
+                                  `;
+
+                               l+=` 
                                </div>
                                <div class="card-footer">
                                     <button type="button" class="btn btn-outline-primary" onclick="getMenuById(${p[i].id})">Actualizar</button>
@@ -287,7 +304,7 @@ function getMenuList(){
                                </div>
                        </div>
                    </div>
-                   `;
+                  `;
             }
             $("#menu").append(l);
         },
