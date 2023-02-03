@@ -1,12 +1,12 @@
 package com.example.pruebaquileia.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "ingrediente")
@@ -15,13 +15,24 @@ import java.io.Serializable;
 @Setter
 public class Ingrediente implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "ingrediente_sequence",
+            sequenceName = "ingrediente_sequence",
+            allocationSize = 1,
+            initialValue = 2
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "ingrediente_sequence"
+    )
     private Integer id;
     private String nombre;
     private Integer calorias;
 
-    @ManyToOne
-    @JoinColumn(name = "menuId")
-    @JsonIgnoreProperties({"ingrediente"})
-    private Menu menu;
+    @ManyToMany
+    @JoinTable(name = "menu_ingrediente",
+            joinColumns = @JoinColumn(name = "menu_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingrediente_id"))
+    public List<Menu> menus;
+
 }

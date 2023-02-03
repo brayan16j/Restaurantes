@@ -7,6 +7,7 @@ function getFrontRestauranteData() {
     let k = {
         id: $("#id").val(),
         razonSocial: $("#razonSocial").val(),
+        nombreComercial: $("#nombreComercial").val(),
         tipoRestaurante: $("#tipoRestaurante").val(),
         ciudad: $("#ciudad").val(),
         horaApertura: $("#horaApertura").val(),
@@ -19,6 +20,7 @@ function getFrontRestauranteData() {
 function cleanFields() {
     $("#id").val("");
     $("#razonSocial").val("");
+    $("#nombreComercial").val("");
     $("#tipoRestaurante").val("");
     $("#ciudad").val("");
     $("#horaApertura").val("");
@@ -77,6 +79,7 @@ function getRestauranteList() {
                             </div>
                            <!--<img src="..." class="card-img-top" alt="...">-->
                                <div class="card-body">
+                                   <p class="card-text">Nombre Comercial: ${p[i].nombreComercial}</p>
                                    <p class="card-text">Tipo: ${p[i].tipoRestaurante}</p>
                                    <p class="card-text">Ciudad: ${p[i].ciudad}</p>
                                    <p class="card-text">Hora Apertura: ${p[i].horaApertura}</p>
@@ -125,6 +128,7 @@ function getRestauranteById(idRestaurante) {
             console.log(p);
             $("#id").val(p.id);
             $("#razonSocial").val(p.razonSocial);
+            $("#nombreComercial").val(p.nombreComercial);
             $("#tipoRestaurante").val(p.tipoRestaurante);
             $("#ciudad").val(p.ciudad);
             $("#horaApertura").val(p.horaApertura);
@@ -320,11 +324,11 @@ function getMenuList() {
     });
 }
 
-function getMenuById(idMenu) {
+function getMenuById(idMenus) {
     $(".saveButtonJL").hide();
     $(".updateButtonJL").show();
     $.ajax({
-        url: "/api/menu/" + idMenu,
+        url: "/api/menu/" + idMenus,
         type: "GET",
         datatype: "JSON",
         success: function (p) {
@@ -399,7 +403,7 @@ function getFrontIngredienteData() {
         id: $("#id").val(),
         nombre: $("#nombre").val(),
         calorias: $("#calorias").val(),
-        menu: {
+        menus: {
             id: $("#MenuSelected").val()
         }
     }
@@ -449,7 +453,8 @@ function saveIngrediente() {
         contentType: 'application/json',
         data: dataToSend,
         success: function (p) {
-            console.log(p);
+            console.log("line 454"+p);
+
             cleanFieldsIngrediente();
             getIngredienteList();
         },
@@ -539,7 +544,7 @@ function getIngredienteById(idMenu) {
             $("#id").val(p.id);
             $("#nombre").val(p.nombre);
             $("#calorias").val(p.calorias);
-            $("#MenuSelected").val(p.menu.id).change();
+            $("#MenuSelected").val(p.menus.id).change();
         },
         error: function (xhr, status) {
             //alert('ha sucedido un problema')
@@ -581,3 +586,26 @@ function cancelUpdateIngrediente() {
     $(".saveButtonJL").show();
     $(".updateButtonJL").hide();
 }
+
+let array = [];
+
+function calculacalorias (id){
+
+    let calorias = $(".calorias_"+id).text();
+    ncalorias = parseInt(calorias);
+    array.push(ncalorias);
+    console.log(array);
+    let sum=0;
+    for (let i of array) sum+=i;
+    console.log(sum)
+    if (sum >2000){
+        alert("Ingredientes superan 2000 Cal");
+        $("#numero_calorias").empty();
+        $("#numero_calorias_1").css('color','red');
+    }
+
+    $("#numero_calorias").empty();
+    $("#numero_calorias").append(sum);
+}
+
+

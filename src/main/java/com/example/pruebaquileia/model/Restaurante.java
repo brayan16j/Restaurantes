@@ -18,9 +18,19 @@ import java.util.List;
 public class Restaurante implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "restaurante_sequence",
+            sequenceName = "restaurante_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "restaurante_sequence"
+    )
     private Integer id;
+    @Column(name = "razonSocial", length = 50, nullable = false)
     private String razonSocial;
+    private String nombreComercial;
     private Integer tipoRestaurante;
     private String ciudad;
     private String horaApertura;

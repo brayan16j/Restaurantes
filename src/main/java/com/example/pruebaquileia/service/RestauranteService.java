@@ -59,6 +59,9 @@ public class RestauranteService {
                 if (restaurante.getHoraCierre() !=null){
                     restauranteEncontrado.get().setHoraCierre(restaurante.getHoraCierre());
                 }
+                if (restaurante.getNombreComercial()!=null){
+                    restauranteEncontrado.get().setNombreComercial(restaurante.getNombreComercial());
+                }
                 if (restaurante.getMenus() !=null){
                     restauranteEncontrado.get().setMenus(restaurante.getMenus());
                 }

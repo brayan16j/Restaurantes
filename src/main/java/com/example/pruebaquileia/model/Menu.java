@@ -16,18 +16,24 @@ import java.util.List;
 @Setter
 public class Menu implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(
+            name = "menu_sequence",
+            sequenceName = "menu_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "menu_sequence"
+    )
     private Integer id;
     private Integer tipoMenu;
     private String nombreMenu;
     private Float precio;
-
     @ManyToOne
     @JoinColumn(name = "restauranteId")
     @JsonIgnoreProperties({"menus"})
     private Restaurante restaurante;
 
-    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "menu")
-    @JsonIgnoreProperties({"menu","restaurante"})
+    @ManyToMany(mappedBy = "menus")
     public List<Ingrediente> ingredientes;
 }
