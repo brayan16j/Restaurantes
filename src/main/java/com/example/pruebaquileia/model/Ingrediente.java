@@ -15,24 +15,13 @@ import java.util.List;
 @Setter
 public class Ingrediente implements Serializable {
     @Id
-    @SequenceGenerator(
-            name = "ingrediente_sequence",
-            sequenceName = "ingrediente_sequence",
-            allocationSize = 1,
-            initialValue = 2
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "ingrediente_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nombre;
     private Integer calorias;
 
-    @ManyToMany
-    @JoinTable(name = "menu_ingrediente",
-            joinColumns = @JoinColumn(name = "menu_id"),
-            inverseJoinColumns = @JoinColumn(name = "ingrediente_id"))
+    @ManyToMany(mappedBy = "ingredientes")
     public List<Menu> menus;
+
 
 }

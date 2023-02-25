@@ -49,9 +49,9 @@ public class IngredienteService {
                 if (ingrediente.getCalorias()!= null){
                     ingredienteEncontrado.get().setCalorias(ingrediente.getCalorias());
                 }
-                if (ingrediente.getMenus()!=null){
+                /*if (ingrediente.getMenu()!=null){
                     ingredienteEncontrado.get().setMenus(ingrediente.getMenus());
-                }
+                }*/
                 return ingredienteRepository.saveIngrediente(ingredienteEncontrado.get());
             }
         }

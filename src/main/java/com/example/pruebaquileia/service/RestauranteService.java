@@ -1,6 +1,5 @@
 package com.example.pruebaquileia.service;
 
-import com.example.pruebaquileia.model.Menu;
 import com.example.pruebaquileia.model.Restaurante;
 import com.example.pruebaquileia.repository.RestauranteRepository;
 import org.springframework.beans.factory.annotation.Autowired;

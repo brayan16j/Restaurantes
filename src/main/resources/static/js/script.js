@@ -215,15 +215,12 @@ function getRestaurantesList() {
         datatype: "JSON",
         success: function (p) {
             console.log(p);
-
-
             for (let i = 0; i < p.length; i++) {
                 let s = `
                     <option value="${p[i].id}">${p[i].razonSocial}</option>
                 `;
                 $("#RestauranteSelected").append(s);
             }
-
         },
         error: function (xhr, status) {
             //alert('ha sucedido un problema')
@@ -385,9 +382,9 @@ function deleteMenuById(idMenu) {
         url: "/api/menu/" + idMenu,
         type: "DELETE",
         datatype: "JSON",
-        success: function (p) {
-            console.log(p);
-            getMenuList();
+        success: function (i) {
+            console.log("entro");
+            getMenuList(i);
         },
         error: function (xhr, status) {
             //alert('ha sucedido un problema')

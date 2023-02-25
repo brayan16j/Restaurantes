@@ -30,9 +30,10 @@ public class MenuController {
     public Menu saveMenu (@RequestBody Menu menu){
         return menuService.saveMenu(menu);
     }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public boolean deleteMenu(@PathVariable("id")Integer id){
+    public boolean deleteMenu(@PathVariable("id")Integer id) {
         return menuService.deleteMenu(id);
     }
     @PutMapping("/update")

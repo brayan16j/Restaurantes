@@ -1,32 +1,26 @@
 package com.example.pruebaquileia.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "restaurante")
+@Table(name = "restaurante", uniqueConstraints = {@UniqueConstraint(columnNames = {"razonSocial"})})
 @NoArgsConstructor
 @Getter
 @Setter
 public class Restaurante implements Serializable {
 
     @Id
-    @SequenceGenerator(
-            name = "restaurante_sequence",
-            sequenceName = "restaurante_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "restaurante_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "razonSocial", length = 50, nullable = false)
     private String razonSocial;
@@ -36,9 +30,8 @@ public class Restaurante implements Serializable {
     private String horaApertura;
     private String horaCierre;
 
-    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "restaurante")
+    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties({"restaurante", "ingredientes"})
-    public List<Menu> menus;
-
-
+    @JsonManagedReference
+    public Set<Menu> menus = new HashSet<>();
 }
