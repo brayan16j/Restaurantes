@@ -13,7 +13,7 @@ public class RestauranteDto {
     private Integer id;
     private String razonSocial;
     private String nombreComercial;
-    private Integer tipoRestaurante;
+    private String tipoRestaurante;
     private String ciudad;
     private String horaApertura;
     private String horaCierre;

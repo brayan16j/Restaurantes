@@ -25,12 +25,12 @@ public class Restaurante implements Serializable {
     @Column(name = "razonSocial", length = 50, nullable = false)
     private String razonSocial;
     private String nombreComercial;
-    private Integer tipoRestaurante;
+    private String tipoRestaurante;
     private String ciudad;
     private String horaApertura;
     private String horaCierre;
 
-    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "restaurante", cascade = CascadeType.ALL) //orphanRemoval = true
     @JsonIgnoreProperties({"restaurante", "ingredientes"})
     @JsonManagedReference
     public Set<Menu> menus = new HashSet<>();
